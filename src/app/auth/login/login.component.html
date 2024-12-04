@@ -1,0 +1,54 @@
+<div class="login-field">
+  <div class="login-background">
+    <div class="login-title">
+      <span>Iniciar Sesión</span>
+    </div>
+    <div class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <!-- Campo Usuario -->
+        <div class="field username-field">
+          <input
+            id="user"
+            formControlName="user"
+            type="text"
+            placeholder="Nombre de usuario"
+          />
+          <div *ngIf="loginForm.get('user')?.invalid && loginForm.get('user')?.touched">
+            <small>El usuario es obligatorio</small>
+          </div>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div class="field password-field">
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            placeholder="Contraseña"
+          />
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <small>Contraseña es obligatoria</small>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="field button-field">
+          <button class="button button-login" type="submit" [disabled]="loginForm.invalid">
+            LOGIN
+          </button>
+          <a class="button button-register" routerLink="/auth/register">
+            REGISTER
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Elementos decorativos -->
+  <span class="square square-tl"></span>
+  <span class="square square-tr"></span>
+  <span class="square square-bl"></span>
+  <span class="square square-br"></span>
+  <span class="star star1"></span>
+  <span class="star star2"></span>
+</div>
