@@ -1,2 +1,30 @@
-<h1>Hola, Usuario 👤</h1>
-<button (click)="onLogout()">Cerrar Sesión</button>
+<div class="admin-container">
+  <!-- Botón de hamburguesa (siempre visible) -->
+  <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+
+  <!-- Barra lateral -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-content">
+      <h3>Proyectos Creados</h3>
+      <p>Aquí se listarán tus proyectos próximamente.</p>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="content">
+    <header>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Solente&display=swap" rel="stylesheet">
+
+      <h1 class="welcome-title">Bienvenido</h1>
+    </header>
+    <button
+    class="create-project-btn"
+    (click)="openNewProjectPage()"
+  >
+    Crear Nuevo Proyecto
+  </button>
+  </main>
+</div>
+
+
+
