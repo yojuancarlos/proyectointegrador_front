@@ -12,6 +12,11 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
+  projects = [
+    // Simulando algunos proyectos iniciales
+    { id: 1, name: 'Proyecto A' },
+    { id: 2, name: 'Proyecto B' },
+  ];
   sidebarOpen = true;
 
   tableData: any[] = [];
@@ -36,15 +41,47 @@ export class AdminComponent implements OnInit {
   }
 
   openNewProjectPage(): void {
-    this.router.navigate(['/admin/create-project']); // Ruta correcta para la creación del proyecto
+    this.router.navigate(['/admin/create-project']); // Asegúrate de que esta ruta sea correcta
+  }
 
+   // Método para navegar a la página de detalles del proyecto
+   viewProjectDetails(projectId: number): void {
+    this.router.navigate([`/admin/project/${projectId}`]);
   }
 
 
 
-
+  // Método para agregar un nuevo proyecto a la lista
+  addProject(newProject: { name: string }): void {
+    const newProjectId = this.projects.length + 1; // Generar un ID único
+    this.projects.push({ id: newProjectId, name: newProject.name });
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

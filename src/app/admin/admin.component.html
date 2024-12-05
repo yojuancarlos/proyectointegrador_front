@@ -6,9 +6,17 @@
   <aside class="sidebar" [class.open]="sidebarOpen">
     <div class="sidebar-content">
       <h3>Proyectos Creados</h3>
-      <p>Aquí se listarán tus proyectos próximamente.</p>
+      <ul>
+        <!-- Iteramos sobre los proyectos -->
+        <li *ngFor="let project of projects" (click)="viewProjectDetails(project.id)">
+          {{ project.name }}
+        </li>
+      </ul>
     </div>
   </aside>
+
+
+  
 
   <!-- Contenido principal -->
   <main class="content">
@@ -25,6 +33,20 @@
   </button>
   </main>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

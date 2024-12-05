@@ -8,6 +8,7 @@ export const routes: Routes = [
   },
   { path: 'user', loadComponent: () => import('./user/user.component').then(m => m.UserComponent) },
   { path: 'admin', loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent) },
+  { path: 'admin/project/:id', loadComponent: () => import('./projects/projects.component').then(m => m.ProjectsComponent) }, // Ruta para los detalles
   {
     path: 'admin/create-project',
     loadComponent: () => import('./create-project/create-project.component').then(m => m.CreateProjectComponent)
