@@ -1,1 +1,16 @@
-<p>project-details works!</p>
+<div *ngIf="project" class="project-details">
+  <h2>Detalles del Proyecto</h2>
+  <p><strong>Descripción:</strong> {{ project.description }}</p>
+  <p><strong>Objetivo General:</strong> {{ project.generalobjective }}</p>
+  <p><strong>Total SGR:</strong> {{ project.totalsgr }}</p>
+  <p><strong>Duración Total:</strong> {{ project.totalduration }} meses</p>
+  <p><strong>Documento del Proyecto:</strong> {{ project.projectdocument }}</p>
+
+  <!-- Aquí podrías agregar el contenido de las pestañas -->
+</div>
+
+<!-- Si el proyecto no existe, mostrar un mensaje de error -->
+<div *ngIf="!project">
+  <h2>Proyecto no encontrado</h2>
+  <p>No se pudo encontrar el proyecto con el ID proporcionado.</p>
+</div>

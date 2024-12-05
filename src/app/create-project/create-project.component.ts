@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
 import { Router } from '@angular/router';
-import { AdminComponent } from '../admin/admin.component'; // Asegúrate de importar el componente Admin
+import { ProjectService } from '../project.service';
+import { CommonModule } from '@angular/common'; // Importa CommonModule si necesitas directivas como *ngIf y *ngFor
 
 @Component({
   selector: 'app-create-project',
-  standalone: true,
-  imports: [ReactiveFormsModule],
+  standalone: true, // Este es un componente standalone
+  imports: [ReactiveFormsModule, CommonModule], // Importa ReactiveFormsModule aquí
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.scss'],
 })
 export class CreateProjectComponent implements OnInit {
   projectForm: FormGroup;
-  selectedFile: File | null = null; // Almacena el archivo seleccionado
-  sidebarOpen = true; // Estado de la barra lateral
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private adminComponent: AdminComponent // Inyectamos el AdminComponent para acceder a addProject
+    private projectService: ProjectService
   ) {
     this.projectForm = this.fb.group({
       description: ['', [Validators.required]],
@@ -31,43 +31,24 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  /**
-   * Alternar el estado de la barra lateral
-   */
-  toggleSidebar(): void {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  /**
-   * Manejar la selección de un archivo.
-   * @param event Evento del input file
-   */
   onFileSelect(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (input?.files?.length) {
-      this.selectedFile = input.files[0]; // Guardar el archivo seleccionado
-      console.log('Archivo seleccionado:', this.selectedFile);
-
-      // Actualizar el campo "projectdocument" con el nombre del archivo
+      this.selectedFile = input.files[0]; // Guardamos el archivo seleccionado
       this.projectForm.patchValue({ projectdocument: this.selectedFile.name });
-      this.projectForm.get('projectdocument')?.updateValueAndValidity();
     }
   }
 
-  /**
-   * Guardar el proyecto y validarlo.
-   */
   saveProject(): void {
     if (this.projectForm.valid && this.selectedFile) {
-      // Extraemos el nombre del proyecto del formulario
-      const projectName = this.projectForm.value.description; // Suponemos que la descripción es el nombre del proyecto
-      console.log('Nuevo proyecto:', projectName);
+      const newProject = {
+        ...this.projectForm.value,
+        id: Date.now(), // Generar ID único
+        projectdocument: this.selectedFile.name, // Guardar nombre del archivo
+      };
 
-      // Llamamos a `addProject` para agregar el proyecto a la lista de proyectos
-      this.adminComponent.addProject({ name: projectName });
+      this.projectService.addProject(newProject); // Usar el servicio para guardar el proyecto
 
-      // Redirigir al dashboard después de guardar
       alert('¡Proyecto guardado con éxito!');
       this.router.navigate(['/admin']);
     } else {
@@ -75,22 +56,7 @@ export class CreateProjectComponent implements OnInit {
     }
   }
 
-  /**
-   * Cancelar la acción y regresar al dashboard
-   */
   cancel(): void {
-    this.router.navigate(['/admin']); // Redirigir al dashboard
+    this.router.navigate(['/admin']);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
