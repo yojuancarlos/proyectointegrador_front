@@ -1,3 +1,5 @@
+
+
 /* Estilos generales */
 body {
   margin: 0;
@@ -30,9 +32,7 @@ body {
 
 .menu-toggle:hover {
   color: #ff5722;
-}
-
-/* Barra lateral */
+}/* Barra lateral */
 .sidebar {
   width: 250px;
   background-color: #2a2a2a;
@@ -45,28 +45,81 @@ body {
   bottom: 0;
   left: 0;
   z-index: 999;
+  height: 100vh; /* Asegura que la barra lateral ocupe toda la altura de la pantalla */
+  overflow: hidden; /* Evita el desbordamiento por defecto */
 }
 
 .sidebar.open {
-  transform: translateX(0);
+  transform: translateX(0); /* Barra lateral visible */
 }
 
+/* Contenedor de la lista de proyectos */
 .sidebar-content {
-  margin-top: 80px; /* Bajamos el contenido */
+  margin-top: 80px; /* Bajamos el contenido para que no se solape con el botón de hamburguesa */
   text-align: center;
+  overflow-y: hidden; /* Deshabilitar el scroll del contenedor general */
+  max-height: calc(100vh - 80px); /* La lista no sobrepasará la altura de la barra lateral */
 }
 
-.sidebar-content h3 {
-  margin: 0;
-  font-size: 20px;
-  text-transform: uppercase;
-  color: #9e6dd2;
+/* Lista de proyectos */
+.sidebar-content ul {
+  list-style-type: none; /* Quitamos los puntos de lista */
+  padding: 0;
+  margin-top: 30px; /* Espacio entre la descripción y la lista */
+  max-height: 85vh; /* Ajustamos el alto máximo de la lista de proyectos */
+  overflow-y: scroll; /* Habilitamos el scroll cuando la lista es larga */
+  -ms-overflow-style: none;  /* Ocultar el scroll en Internet Explorer */
+  scrollbar-width: none; /* Ocultar el scroll en Firefox */
 }
 
-.sidebar-content p {
-  margin-top: 10px;
+/* Ocultar la barra de desplazamiento (solo en Webkit) */
+.sidebar-content ul::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* El resto de los estilos para la lista de proyectos */
+.sidebar-content li {
+  margin-bottom: 15px; /* Espacio entre los elementos de la lista */
+  background-color: #333; /* Fondo oscuro para cada proyecto */
+  color: #fff;
+  padding: 12px 15px; /* Espaciado alrededor del texto */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, transform 0.3s; /* Efectos de transición */
+  cursor: pointer; /* Hacerlo clickeable */
   font-size: 16px;
-  color: #ccc;
+  display: flex;
+  justify-content: space-between; /* Para que la X se posicione a la derecha */
+  align-items: center;
+}
+
+/* Efectos al pasar el mouse sobre los elementos de la lista */
+.sidebar-content li:hover {
+  background-color: #9e6dd2; /* Cambio de color al pasar el mouse */
+  transform: translateX(5px); /* Desplazamiento ligero a la derecha */
+}
+
+/* Estilo para los enlaces de la lista */
+.sidebar-content a {
+  color: #fff; /* Aseguramos que el color del texto sea blanco */
+  text-decoration: none; /* Quitamos el subrayado */
+}
+
+.sidebar-content a:hover {
+  text-decoration: underline; /* Subrayado solo cuando pasas el mouse por encima */
+}
+
+/* Botón de eliminar (X) */
+.delete-btn {
+  font-size: 18px;
+  color: #ff5722; /* Color de la X */
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s ease;
+}
+
+.delete-btn:hover {
+  color: #e64a19; /* Cambio de color al pasar el mouse */
 }
 
 /* Contenido principal */

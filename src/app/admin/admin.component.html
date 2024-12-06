@@ -12,8 +12,9 @@
       <ul>
         <li *ngFor="let project of projects">
           <a href="javascript:void(0);" (click)="viewProjectDetail(project)">
-            {{ project.name }} - {{ project.description }}
+            {{ project.description }} - {{ project.generalobjective }}
           </a>
+          <span class="delete-btn" (click)="deleteProject(project)">❌</span> <!-- Botón de eliminar -->
         </li>
       </ul>
     </div>

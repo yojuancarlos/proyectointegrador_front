@@ -14,6 +14,7 @@ body {
   display: flex;
   flex: 1;
   height: 100%; /* Aseguramos que se ocupe toda la altura disponible */
+  background: linear-gradient(to right bottom, #ffad42, #903bff); /* Fondo con gradiente */
 }
 
 /* Barra lateral */
@@ -32,7 +33,7 @@ body {
 }
 
 .sidebar.open {
-  transform: translateX(0); /* Barra lateral visible al abrir */
+  transform: translateX(0); /* La barra lateral se muestra al abrir */
 }
 
 .sidebar-content {
@@ -51,6 +52,25 @@ body {
   margin-top: 10px;
   font-size: 16px;
   color: #ccc;
+}
+
+/* Botón de hamburguesa */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  transition: color 0.3s;
+}
+
+.menu-toggle:hover {
+  color: #5018c9;
 }
 
 /* Contenido principal */

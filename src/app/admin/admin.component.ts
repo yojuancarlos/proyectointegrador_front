@@ -42,5 +42,17 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/admin/project-detail', project.description]);
   }
 
+   // Función para eliminar un proyecto
+   deleteProject(project: any): void {
+    // Filtrar el proyecto a eliminar
+    this.projects = this.projects.filter(p => p !== project);
+
+    // Actualizar el localStorage con los proyectos restantes
+    localStorage.setItem('projects', JSON.stringify(this.projects));
+
+    // Opcionalmente, puedes agregar un mensaje de confirmación
+    alert(`Proyecto "${project.description}" eliminado con éxito`);
+  }
+
 
 }
