@@ -1,29 +1,47 @@
-<div class="form-container">
-  <h2>Crear Proyecto</h2>
-  <form [formGroup]="projectForm" (ngSubmit)="saveProject()">
-    <label for="description">Descripción:</label>
-    <input id="description" formControlName="description" type="text" />
-
-    <label for="generalobjective">Objetivo General:</label>
-    <input id="generalobjective" formControlName="generalobjective" type="text" />
-
-    <label for="projectdocument">Documento del Proyecto (Archivo Excel):</label>
-    <input
-      type="file"
-      accept=".xls,.xlsx"
-      (change)="onFileSelect($event)"
-      formControlName="projectdocument"
-    />
-
-    <label for="totalsgr">Total SGR:</label>
-    <input id="totalsgr" formControlName="totalsgr" type="text" />
-
-    <label for="totalduration">Duración Total:</label>
-    <input id="totalduration" formControlName="totalduration" type="number" />
-
-    <div class="form-buttons">
-      <button type="submit" [disabled]="projectForm.invalid">Guardar</button>
-      <button type="button" (click)="cancel()">Cancelar</button>
+<div class="admin-container">
+  <!-- Barra lateral -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-header">
+      <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
     </div>
-  </form>
+    <div class="sidebar-content">
+      <h3>Proyectos Creados</h3>
+      <p>Aquí se listarán tus proyectos próximamente.</p>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="content">
+    <header>
+      <h1 class="welcome-title">Crear Nuevo Proyecto</h1>
+    </header>
+
+    <!-- Formulario -->
+    <form [formGroup]="projectForm" class="form" (ngSubmit)="saveProject()">
+      <label for="description">Descripción:</label>
+      <input id="description" type="text" formControlName="description" />
+
+      <label for="generalobjective">Objetivo General:</label>
+      <input id="generalobjective" type="text" formControlName="generalobjective" />
+
+      <label for="projectdocument">Documento del Proyecto:</label>
+      <input
+        id="projectdocument"
+        type="file"
+        (change)="onFileSelect($event)"
+        accept=".xls,.xlsx"
+      />
+
+      <label for="totalsgr">Total SGR:</label>
+      <input id="totalsgr" type="text" formControlName="totalsgr" />
+
+      <label for="totalduration">Duración Total:</label>
+      <input id="totalduration" type="number" formControlName="totalduration" />
+
+      <div class="button-group">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </main>
 </div>
