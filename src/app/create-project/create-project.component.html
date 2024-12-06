@@ -1,3 +1,4 @@
+<!-- create-project.component.html -->
 <div class="admin-container">
   <!-- Barra lateral -->
   <aside class="sidebar" [class.open]="sidebarOpen">
@@ -43,5 +44,16 @@
         <button type="button" (click)="cancel()">Cancelar</button>
       </div>
     </form>
+
+    <!-- Mostrar Proyecto Guardado -->
+    <div *ngIf="storedProject">
+      <h2>Proyecto Guardado:</h2>
+      <p><strong>Descripción:</strong> {{ storedProject.description }}</p>
+      <p><strong>Objetivo General:</strong> {{ storedProject.generalobjective }}</p>
+      <p><strong>Total SGR:</strong> {{ storedProject.totalsgr }}</p>
+      <p><strong>Duración Total:</strong> {{ storedProject.totalduration }}</p>
+
+      <a [href]="storedProject.file" download>Descargar Documento del Proyecto</a>
+    </div>
   </main>
 </div>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,40 +11,36 @@ import { AuthService } from '../auth/auth.service';
 })
 export class AdminComponent implements OnInit {
   sidebarOpen = true;
+  projects: any[] = []; // Lista de proyectos almacenados
 
-  tableData: any[] = [];
-  tableHeaders: string[] = [];
-  userFiles: string[] = []; // Lista de archivos subidos
-
-
-  constructor(private authService: AuthService, private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-
+    this.loadProjects(); // Cargar los proyectos cuando la página se inicia
   }
 
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  createProject(): void {
-    alert('¡Funcionalidad para crear un proyecto próximamente!');
-  }
-
   openNewProjectPage(): void {
-    this.router.navigate(['/admin/create-project']); // Ruta correcta para la creación del proyecto
-
+    this.router.navigate(['/admin/create-project']); // Navegar a la página de creación de proyecto
   }
 
+  loadProjects(): void {
+    const storedProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+    if (storedProjects.length > 0) {
+      this.projects = storedProjects;
+    } else {
+      console.log('No hay proyectos guardados en localStorage');
+    }
+  }
 
-
+  // Esta función se llama cuando se hace clic en un proyecto de la lista
+  viewProjectDetail(project: any): void {
+    console.log('Proyecto seleccionado:', project); // Verifica si el proyecto tiene una descripción correctamente
+    this.router.navigate(['/admin/project-detail', project.description]);
+  }
 
 
 }
-
-
-
-
-

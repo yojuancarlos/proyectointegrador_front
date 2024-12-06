@@ -1,11 +1,14 @@
+// create-project.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Importar CommonModule
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule], // Importar CommonModule
+
   templateUrl: './create-project.component.html',
   styleUrls: ['./create-project.component.scss'],
 })
@@ -13,6 +16,8 @@ export class CreateProjectComponent implements OnInit {
   projectForm: FormGroup;
   selectedFile: File | null = null; // Almacena el archivo seleccionado
   sidebarOpen = true; // Estado de la barra lateral
+
+  storedProject: any = null; // Datos del proyecto guardado en localStorage
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.projectForm = this.fb.group({
@@ -24,7 +29,9 @@ export class CreateProjectComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProject(); // Cargar el proyecto si está en localStorage
+  }
 
   /**
    * Alternar el estado de la barra lateral
@@ -41,27 +48,60 @@ export class CreateProjectComponent implements OnInit {
     const input = event.target as HTMLInputElement;
 
     if (input?.files?.length) {
-      this.selectedFile = input.files[0]; // Guardar el archivo seleccionado
-      console.log('Archivo seleccionado:', this.selectedFile);
+      const file = input.files[0]; // Obtener el archivo seleccionado
+      this.selectedFile = file; // Guardar el archivo seleccionado
 
-      // Actualizar el campo "projectdocument" con el nombre del archivo
-      this.projectForm.patchValue({ projectdocument: this.selectedFile.name });
-      this.projectForm.get('projectdocument')?.updateValueAndValidity();
+      const reader = new FileReader(); // Crear un lector de archivos
+
+      reader.onloadend = () => {
+        // Al finalizar la lectura, guardamos el archivo en base64
+        const fileBase64 = reader.result as string;
+
+        // Puedes hacer algo con el archivo base64 aquí si es necesario
+        console.log('Archivo cargado como base64:', fileBase64);
+
+        // Actualizar el campo del formulario con el nombre del archivo
+        this.projectForm.patchValue({ projectdocument: file.name });
+      };
+
+      reader.readAsDataURL(file); // Leer el archivo como base64
     }
   }
+
 
   /**
    * Guardar el proyecto y validar la selección del archivo.
    */
+
+
+
   saveProject(): void {
-    if (this.projectForm.valid && this.selectedFile) {
-      console.log('Datos del formulario:', this.projectForm.value);
-      console.log('Archivo cargado:', this.selectedFile);
+    if (this.projectForm.valid) {
+      const newProject = this.projectForm.value;
+      const storedProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+
+      // Añadir el nuevo proyecto a la lista
+      storedProjects.push(newProject);
+
+      // Guardar el array de proyectos de nuevo en localStorage
+      localStorage.setItem('projects', JSON.stringify(storedProjects));
 
       alert('¡Proyecto guardado con éxito!');
-      this.router.navigate(['/admin']); // Redirigir al dashboard
+      this.router.navigate(['/admin']); // Regresar al admin después de guardar el proyecto
     } else {
-      alert('Por favor completa todos los campos y selecciona un archivo.');
+      alert('Por favor completa todos los campos.');
+    }
+  }
+
+
+
+  /**
+   * Cargar el proyecto desde localStorage
+   */
+  loadProject(): void {
+    const storedData = localStorage.getItem('project');
+    if (storedData) {
+      this.storedProject = JSON.parse(storedData);
     }
   }
 

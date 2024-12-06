@@ -1,0 +1,21 @@
+.project-detail {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    font-size: 24px;
+    color: #333;
+  }
+
+  p {
+    font-size: 18px;
+    color: #555;
+    margin: 8px 0;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+}

@@ -7,6 +7,15 @@
     <div class="sidebar-content">
       <h3>Proyectos Creados</h3>
       <p>Aquí se listarán tus proyectos próximamente.</p>
+
+      <!-- Lista de proyectos (ahora clickeables) -->
+      <ul>
+        <li *ngFor="let project of projects">
+          <a href="javascript:void(0);" (click)="viewProjectDetail(project)">
+            {{ project.name }} - {{ project.description }}
+          </a>
+        </li>
+      </ul>
     </div>
   </aside>
 
@@ -14,17 +23,8 @@
   <main class="content">
     <header>
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Solente&display=swap" rel="stylesheet">
-
       <h1 class="welcome-title">Bienvenido</h1>
     </header>
-    <button
-    class="create-project-btn"
-    (click)="openNewProjectPage()"
-  >
-    Crear Nuevo Proyecto
-  </button>
+    <button class="create-project-btn" (click)="openNewProjectPage()">Crear Nuevo Proyecto</button>
   </main>
 </div>
-
-
-
