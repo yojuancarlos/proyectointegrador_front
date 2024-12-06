@@ -80,7 +80,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;    
+  align-items: center;
   justify-content: center;
   text-align: center;
   padding: 20px;
@@ -167,4 +167,39 @@ button {
 button:hover {
   background-color: #e64a19;
   transform: translateY(-2px);
+}
+.tabs ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.tabs li {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  margin-right: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.tabs li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.excel-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.excel-table th, .excel-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.excel-table th {
+  background-color: #f4f4f4;
 }

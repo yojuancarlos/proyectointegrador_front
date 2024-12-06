@@ -1,21 +1,163 @@
-.project-detail {
+/* Estilos generales */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to right bottom, #ffad42, #903bff); /* Fondo de gradiente */
+  color: #fff;
+  height: 100vh; /* Aseguramos que el fondo cubra toda la altura de la página */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal */
+.admin-container {
+  display: flex;
+  flex: 1;
+  height: 100%; /* Aseguramos que se ocupe toda la altura disponible */
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 250px;
+  background-color: #2a2a2a;
+  color: #fff;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%); /* Barra lateral oculta por defecto */
   padding: 20px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.sidebar.open {
+  transform: translateX(0); /* Barra lateral visible al abrir */
+}
+
+.sidebar-content {
+  margin-top: 60px; /* Aseguramos que el contenido de la barra lateral no se solape con el botón de hamburguesa */
+  text-align: center;
+}
+
+.sidebar-content h3 {
+  margin: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #9e6dd2;
+}
+
+.sidebar-content p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+/* Contenido principal */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-left: 270px; /* Aseguramos espacio para la barra lateral */
+  padding-top: 40px;
+  text-align: left;
+  background: linear-gradient(to right bottom, #ffad42, #903bff); /* Fondo con gradiente */
+}
+
+.welcome-title {
+  font-family: 'Solente', cursive;
+  font-size: 64px;
+  margin-bottom: 20px;
+  color: #fff;
+  align-self: flex-start;
+}
+
+.create-project-btn {
+  background-color: #ff5722;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
+.create-project-btn:hover {
+  background-color: #e64a19;
+  transform: translateY(-2px);
+}
+
+/* Estilos de la tabla que muestra los datos de Excel */
+.excel-table {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #fff; /* Solo la tabla tiene el fondo blanco */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para la tabla */
+}
+
+.excel-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.excel-table th, .excel-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.excel-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.excel-table td {
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  h2 {
-    font-size: 24px;
-    color: #333;
-  }
+.excel-table tr:nth-child(even) td {
+  background-color: #fafafa; /* Alternar colores de las filas */
+}
 
-  p {
-    font-size: 18px;
-    color: #555;
-    margin: 8px 0;
-  }
+/* Contenedor de las pestañas */
+.tabs {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
 
-  strong {
-    font-weight: bold;
-  }
+.tabs ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tabs li {
+  padding: 12px 25px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.tabs li.active {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.1);
+}
+
+.tabs li:hover {
+  background-color: #e0e0e0;
 }

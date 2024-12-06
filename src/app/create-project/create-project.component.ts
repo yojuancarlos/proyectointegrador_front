@@ -16,7 +16,7 @@ export class CreateProjectComponent implements OnInit {
   projectForm: FormGroup;
   selectedFile: File | null = null; // Almacena el archivo seleccionado
   sidebarOpen = true; // Estado de la barra lateral
-
+  projects: any[] = []; // Lista de proyectos almacenados
   storedProject: any = null; // Datos del proyecto guardado en localStorage
 
   constructor(private fb: FormBuilder, private router: Router) {
@@ -28,9 +28,8 @@ export class CreateProjectComponent implements OnInit {
       totalduration: [0, [Validators.required, Validators.min(1)]],
     });
   }
-
   ngOnInit(): void {
-    this.loadProject(); // Cargar el proyecto si está en localStorage
+    this.loadProjects(); // Cargar los proyectos cuando la página se inicia
   }
 
   /**
@@ -76,18 +75,28 @@ export class CreateProjectComponent implements OnInit {
 
 
   saveProject(): void {
-    if (this.projectForm.valid) {
-      const newProject = this.projectForm.value;
-      const storedProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+    if (this.projectForm.valid && this.selectedFile) {
+      const reader = new FileReader();
 
-      // Añadir el nuevo proyecto a la lista
-      storedProjects.push(newProject);
+      reader.onloadend = () => {
+        // Convertimos el archivo a base64
+        const base64File = reader.result as string; // Esto es base64
 
-      // Guardar el array de proyectos de nuevo en localStorage
-      localStorage.setItem('projects', JSON.stringify(storedProjects));
+        const newProject = this.projectForm.value;
+        newProject.projectdocument = base64File; // Guardar el archivo en base64 en el campo 'projectdocument'
 
-      alert('¡Proyecto guardado con éxito!');
-      this.router.navigate(['/admin']); // Regresar al admin después de guardar el proyecto
+        const storedProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+        storedProjects.push(newProject);
+
+        // Guardar los proyectos con el archivo base64
+        localStorage.setItem('projects', JSON.stringify(storedProjects));
+
+        alert('¡Proyecto guardado con éxito!');
+        this.router.navigate(['/admin']); // Regresar al admin después de guardar el proyecto
+      };
+
+      // Leemos el archivo como base64
+      reader.readAsDataURL(this.selectedFile); // Esto convierte el archivo a base64
     } else {
       alert('Por favor completa todos los campos.');
     }
@@ -95,13 +104,23 @@ export class CreateProjectComponent implements OnInit {
 
 
 
+
+  viewProjectDetail(project: any): void {
+    console.log('Proyecto seleccionado:', project); // Verifica si el proyecto tiene una descripción correctamente
+    this.router.navigate(['/admin/project-detail', project.description]);
+  }
+
+
+
   /**
    * Cargar el proyecto desde localStorage
    */
-  loadProject(): void {
-    const storedData = localStorage.getItem('project');
-    if (storedData) {
-      this.storedProject = JSON.parse(storedData);
+  loadProjects(): void {
+    const storedProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+    if (storedProjects.length > 0) {
+      this.projects = storedProjects;
+    } else {
+      console.log('No hay proyectos guardados en localStorage');
     }
   }
 

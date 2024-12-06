@@ -1,7 +1,46 @@
 <div class="project-detail">
-  <h2>{{ project?.name }}</h2>
+ <!-- Botón de hamburguesa (siempre visible) -->
+ <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+
+
+
+
+
+
+
+  <header>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Solente&display=swap" rel="stylesheet">
+  </header>
+  <h2>{{ project?.description }}</h2>
   <p><strong>Descripción:</strong> {{ project?.description }}</p>
   <p><strong>Objetivo General:</strong> {{ project?.generalobjective }}</p>
   <p><strong>Total SGR:</strong> {{ project?.totalsgr }}</p>
   <p><strong>Duración Total:</strong> {{ project?.totalduration }}</p>
+
+  <!-- Pestañas para navegar entre las hojas del Excel -->
+  <div class="tabs">
+    <ul>
+      <li *ngFor="let tab of tabs"
+          [class.active]="tab === currentTab"
+          (click)="changeTab(tab)">
+        {{ tab }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Mostrar la tabla con los datos de la pestaña seleccionada -->
+  <div class="excel-table">
+    <table *ngIf="excelData[currentTab]">
+      <thead>
+        <tr>
+          <th *ngFor="let header of excelData[currentTab][0]">{{ header }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of excelData[currentTab].slice(1)">
+          <td *ngFor="let cell of row">{{ cell }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
