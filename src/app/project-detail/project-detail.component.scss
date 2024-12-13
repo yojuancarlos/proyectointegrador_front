@@ -147,6 +147,40 @@ body {
   background-color: #fafafa; /* Alternar colores de las filas */
 }
 
+/* Estilo para celdas editables */
+.editable-cell {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #333;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.editable-cell:focus {
+  outline: 2px solid #007bff;
+  background-color: #f0f8ff;
+}
+
+/* Botón para guardar cambios */
+.save-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+
 /* Contenedor de las pestañas */
 .tabs {
   margin-bottom: 20px;

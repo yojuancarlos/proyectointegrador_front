@@ -1,5 +1,5 @@
 <div class="admin-container">
-  <!-- Botón de hamburguesa (siempre visible) -->
+  <!-- Botón de hamburguesa -->
   <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
 
   <!-- Barra lateral -->
@@ -7,8 +7,6 @@
     <div class="sidebar-content">
       <h3>Proyectos Creados</h3>
       <p>Lista de proyectos creados</p>
-
-      <!-- Lista de proyectos (ahora clickeables) -->
       <ul>
         <li *ngFor="let project of project">
           <a href="javascript:void(0);" (click)="viewProjectDetail(project)">
@@ -33,7 +31,7 @@
     <p><strong>Total SGR:</strong> {{ project?.totalsgr }}</p>
     <p><strong>Duración Total:</strong> {{ project?.totalduration }}</p>
 
-    <!-- Pestañas para navegar entre las hojas del Excel -->
+    <!-- Pestañas -->
     <div class="tabs">
       <ul>
         <li *ngFor="let tab of tabs" [class.active]="tab === currentTab" (click)="changeTab(tab)">
@@ -42,7 +40,7 @@
       </ul>
     </div>
 
-    <!-- Mostrar la tabla con los datos de la pestaña seleccionada -->
+    <!-- Tabla Editable -->
     <div class="excel-table">
       <table *ngIf="excelData[currentTab]">
         <thead>
@@ -51,11 +49,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of excelData[currentTab].slice(1)">
-            <td *ngFor="let cell of row">{{ cell }}</td>
+          <tr *ngFor="let row of excelData[currentTab].slice(1); let rowIndex = index">
+            <td *ngFor="let cell of row; let colIndex = index">
+              <input
+                 type="text"
+                  [value]="cell"
+                  (input)="updateCell(rowIndex, colIndex, $event)"
+                        class="editable-cell"
+/>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Botón para guardar cambios -->
+    <button (click)="saveChanges()" class="save-btn">Guardar Cambios</button>
   </main>
 </div>
